@@ -149,6 +149,8 @@ type ClusterSpec struct {
 	IAM *IAMSpec `json:"iam,omitempty"`
 	// EncryptionConfig holds the encryption config
 	EncryptionConfig *bool `json:"encryptionConfig,omitempty"`
+	// NetworkCreateGateway make IGW optional when k8s is running inside a private subnet
+	CreateInternetGateway bool `json:"createInternetGateway,omitempty"`
 }
 
 // FileAssetSpec defines the structure for a file asset
