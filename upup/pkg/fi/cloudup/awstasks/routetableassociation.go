@@ -45,6 +45,10 @@ func (s *RouteTableAssociation) CompareWithID() *string {
 func (e *RouteTableAssociation) Find(c *fi.Context) (*RouteTableAssociation, error) {
 	cloud := c.Cloud.(awsup.AWSCloud)
 
+	if e.RouteTable == nil {
+		return nil, nil
+	}
+
 	routeTableID := e.RouteTable.ID
 	subnetID := e.Subnet.ID
 
