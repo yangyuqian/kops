@@ -72,6 +72,8 @@ type ClusterSpec struct {
 	// NetworkID is an identifier of a network, if we want to reuse/share an existing network (e.g. an AWS VPC)
 	NetworkID string `json:"networkID,omitempty"`
 
+	NetworkSkipCreateGateway bool `json:"networkCreateGateway,omitempty"`
+
 	// Topology defines the type of network topology to use on the cluster - default public
 	// This is heavily weighted towards AWS for the time being, but should also be agnostic enough
 	// to port out to GCE later if needed
