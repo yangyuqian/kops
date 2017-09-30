@@ -22,6 +22,7 @@ import (
 	"k8s.io/kops/pkg/apis/kops"
 	"k8s.io/kops/pkg/diff"
 	"k8s.io/kops/upup/pkg/fi/utils"
+	"log"
 )
 
 // HasExtraFields checks if the yaml has fields that were not mapped to the object
@@ -29,6 +30,8 @@ import (
 // If there are extra fields it returns a string with a description of the diffs
 // If there are no extra fields it returns an empty string
 func HasExtraFields(yaml string, object runtime.Object) (string, error) {
+	log.Printf("yaml object type: %+v", object)
+	log.Printf("yaml: %s", yaml)
 	// Convert the cluster back to YAML for comparison purposes
 	newYaml, err := kops.ToVersionedYaml(object)
 	if err != nil {
