@@ -497,6 +497,7 @@ func autoConvert_v1alpha1_ClusterSpec_To_kops_ClusterSpec(in *ClusterSpec, out *
 	out.ConfigBase = in.ConfigBase
 	out.CloudProvider = in.CloudProvider
 	out.KubernetesVersion = in.KubernetesVersion
+	out.CreateInternetGateway = in.CreateInternetGateway
 	// WARNING: in.Zones requires manual conversion: does not exist in peer-type
 	out.Project = in.Project
 	out.MasterPublicName = in.MasterPublicName
@@ -681,6 +682,7 @@ func autoConvert_kops_ClusterSpec_To_v1alpha1_ClusterSpec(in *kops.ClusterSpec, 
 	out.Channel = in.Channel
 	out.ConfigBase = in.ConfigBase
 	out.CloudProvider = in.CloudProvider
+	out.CreateInternetGateway = in.CreateInternetGateway
 	out.KubernetesVersion = in.KubernetesVersion
 	// WARNING: in.Subnets requires manual conversion: does not exist in peer-type
 	out.Project = in.Project
