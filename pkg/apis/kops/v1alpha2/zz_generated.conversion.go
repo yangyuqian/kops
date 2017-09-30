@@ -524,6 +524,7 @@ func autoConvert_v1alpha2_ClusterSpec_To_kops_ClusterSpec(in *ClusterSpec, out *
 	out.Channel = in.Channel
 	out.ConfigBase = in.ConfigBase
 	out.CloudProvider = in.CloudProvider
+	out.CreateInternetGateway = in.CreateInternetGateway
 	out.KubernetesVersion = in.KubernetesVersion
 	if in.Subnets != nil {
 		in, out := &in.Subnets, &out.Subnets
@@ -724,6 +725,7 @@ func autoConvert_kops_ClusterSpec_To_v1alpha2_ClusterSpec(in *kops.ClusterSpec, 
 	out.Channel = in.Channel
 	out.ConfigBase = in.ConfigBase
 	out.CloudProvider = in.CloudProvider
+	out.CreateInternetGateway = in.CreateInternetGateway
 	out.KubernetesVersion = in.KubernetesVersion
 	if in.Subnets != nil {
 		in, out := &in.Subnets, &out.Subnets

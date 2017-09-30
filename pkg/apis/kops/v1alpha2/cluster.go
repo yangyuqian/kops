@@ -172,6 +172,9 @@ type ClusterSpec struct {
 
 	// Alternative locations for files and containers
 	Assets *Assets `json:"assets,omitempty"`
+
+	// NetworkCreateGateway make IGW optional when k8s is running inside a private subnet
+	CreateInternetGateway bool `json:"createInternetGateway,omitempty"`
 }
 
 type Assets struct {

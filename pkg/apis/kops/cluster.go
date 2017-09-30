@@ -254,6 +254,9 @@ type ClusterSpec struct {
 	// This API component is under contruction, will remove this comment
 	// once this API is fully functional.
 	Assets *Assets `json:"assets,omitempty"`
+
+	// NetworkCreateGateway make IGW optional when k8s is running inside a private subnet
+	CreateInternetGateway bool `json:"createInternetGateway,omitempty"`
 }
 
 type Assets struct {
