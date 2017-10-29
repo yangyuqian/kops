@@ -161,6 +161,7 @@ func (_ *Subnet) RenderAWS(t *awsup.AWSAPITarget, a, e, changes *Subnet) error {
 			return fmt.Errorf("Subnet with id %q not found", fi.StringValue(e.ID))
 		}
 
+		delete(e.Tags, "Name")
 		return t.AddAWSTags(*e.ID, e.Tags)
 	}
 
