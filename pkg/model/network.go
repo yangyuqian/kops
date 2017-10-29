@@ -179,7 +179,7 @@ func (b *NetworkModelBuilder) Build(c *fi.ModelBuilderContext) error {
 
 		switch subnetSpec.Type {
 		case kops.SubnetTypePublic, kops.SubnetTypeUtility:
-			if !sharedSubnet {
+			if !sharedSubnet && publicRouteTable != nil {
 				c.AddTask(&awstasks.RouteTableAssociation{
 					Name:       s(subnetSpec.Name + "." + b.ClusterName()),
 					Lifecycle:  b.Lifecycle,
