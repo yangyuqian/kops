@@ -160,6 +160,8 @@ func (_ *Subnet) RenderAWS(t *awsup.AWSAPITarget, a, e, changes *Subnet) error {
 		if a == nil {
 			return fmt.Errorf("Subnet with id %q not found", fi.StringValue(e.ID))
 		}
+
+		return t.AddAWSTags(*e.ID, e.Tags)
 	}
 
 	if a == nil {
