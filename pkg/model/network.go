@@ -147,6 +147,7 @@ func (b *NetworkModelBuilder) Build(c *fi.ModelBuilderContext) error {
 		sharedSubnet := subnetSpec.ProviderID != ""
 		subnetName := subnetSpec.Name + "." + b.ClusterName()
 		tags := b.CloudTags(subnetName, sharedSubnet)
+		glog.Infof("--------------- subnet tags: %+v", tags)
 
 		// Apply tags so that Kubernetes knows which subnets should be used for internal/external ELBs
 		switch subnetSpec.Type {

@@ -161,7 +161,6 @@ func (_ *Subnet) RenderAWS(t *awsup.AWSAPITarget, a, e, changes *Subnet) error {
 			return fmt.Errorf("Subnet with id %q not found", fi.StringValue(e.ID))
 		}
 
-		glog.Infof("RenderAWS...Subnet: %+v, %+v, %+v, %+v", t, e, e, changes)
 		return nil
 	}
 
