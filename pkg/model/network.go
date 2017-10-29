@@ -108,16 +108,19 @@ func (b *NetworkModelBuilder) Build(c *fi.ModelBuilderContext) error {
 	// We always have a public route table, though for private networks it is only used for NGWs and ELBs
 	var publicRouteTable *awstasks.RouteTable
 	{
-		// The internet gateway is the main entry point to the cluster.
-		igw := &awstasks.InternetGateway{
-			Name:      s(b.ClusterName()),
-			Lifecycle: b.Lifecycle,
-			VPC:       b.LinkToVPC(),
-			Shared:    fi.Bool(sharedVPC),
+		var igw *awstasks.InternetGateway
+		if b.Cluster.Spec.EnableInternetGateway {
+			// The internet gateway is the main entry point to the cluster.
+			igw = &awstasks.InternetGateway{
+				Name:      s(b.ClusterName()),
+				Lifecycle: b.Lifecycle,
+				VPC:       b.LinkToVPC(),
+				Shared:    fi.Bool(sharedVPC),
+			}
+			c.AddTask(igw)
 		}
-		c.AddTask(igw)
 
-		if !allSubnetsShared {
+		if !allSubnetsShared && b.Cluster.Spec.EnableInternetGateway {
 			publicRouteTable = &awstasks.RouteTable{
 				Name:      s(b.ClusterName()),
 				Lifecycle: b.Lifecycle,
