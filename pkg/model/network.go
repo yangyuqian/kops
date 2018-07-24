@@ -139,17 +139,20 @@ func (b *NetworkModelBuilder) Build(c *fi.ModelBuilderContext) error {
 	// We always have a public route table, though for private networks it is only used for NGWs and ELBs
 	var publicRouteTable *awstasks.RouteTable
 	{
+		var igw *awstasks.InternetGateway
 		// The internet gateway is the main entry point to the cluster.
-		igw := &awstasks.InternetGateway{
-			Name:      s(b.ClusterName()),
-			Lifecycle: b.Lifecycle,
-			VPC:       b.LinkToVPC(),
-			Shared:    fi.Bool(sharedVPC),
+		if b.Cluster.Spec.EnableInternetGateway {
+			igw = &awstasks.InternetGateway{
+				Name:      s(b.ClusterName()),
+				Lifecycle: b.Lifecycle,
+				VPC:       b.LinkToVPC(),
+				Shared:    fi.Bool(sharedVPC),
+			}
+			igw.Tags = b.CloudTags(*igw.Name, *igw.Shared)
+			c.AddTask(igw)
 		}
-		igw.Tags = b.CloudTags(*igw.Name, *igw.Shared)
-		c.AddTask(igw)
 
-		if !allSubnetsShared {
+		if !allSubnetsShared && b.Cluster.Spec.EnableInternetGateway {
 			// The route table is not shared if we're creating a subnet for our cluster
 			// That subnet will be owned, and will be associated with our RouteTable.
 			// On deletion we delete the subnet & the route table.
@@ -217,7 +220,7 @@ func (b *NetworkModelBuilder) Build(c *fi.ModelBuilderContext) error {
 
 		switch subnetSpec.Type {
 		case kops.SubnetTypePublic, kops.SubnetTypeUtility:
-			if !sharedSubnet {
+			if !sharedSubnet && publicRouteTable != nil {
 				c.AddTask(&awstasks.RouteTableAssociation{
 					Name:       s(subnetSpec.Name + "." + b.ClusterName()),
 					Lifecycle:  b.Lifecycle,

@@ -188,6 +188,7 @@ func (_ *Subnet) RenderAWS(t *awsup.AWSAPITarget, a, e, changes *Subnet) error {
 		e.ID = response.Subnet.SubnetId
 	}
 
+	delete(e.Tags, "Name")
 	return t.AddAWSTags(*e.ID, e.Tags)
 }
 
